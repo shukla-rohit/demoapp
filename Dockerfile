@@ -8,42 +8,25 @@ RUN apk add --update curl php php-fpm php-mysqli php-json php-openssl php-curl \
 RUN adduser -S www-data -u 1000
 
 # Create directory structure.
-RUN mkdir -p /srv/www/vhosts/Xento/
+RUN mkdir -p /srv/www/vhosts/demoapp/
 
 # Copy current code base.
-COPY --chown=www-data . /srv/www/vhosts/Xento/
-
-# Create directory structure for XentoCoreConfig
-RUN mkdir -p /srv/www/vhosts/XentoCoreConfig
-
-# Copy XentoCoreConfig
-COPY --chown=www-data ./XentoCoreConfig/ /srv/www/vhosts/XentoCoreConfig/
-
-# Copy test environment test.xento.lcl.php file
-COPY --chown=www-data ./XentoCoreConfig/test.xento.lcl.php /srv/www/vhosts/XentoCoreConfig/test.xento.lcl.php
-
-# Create Interface directoy
-RUN mkdir -p /srv/www/vhosts/Interfaces/Website
+COPY --chown=www-data . /srv/www/vhosts/demoapp/
 
 # Change work directory
-WORKDIR /srv/www/vhosts/Xento/
-
-# Install dependencies
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer install --no-dev
+WORKDIR /srv/www/vhosts/demoapp/
 
 # copy nginx.conf file.
-COPY ./XentoCoreConfig/nginx.conf /etc/nginx/nginx.conf
+COPY ./nginx.conf /etc/nginx/nginx.conf
 
 # copy php-fpm file.
-COPY ./XentoCoreConfig/fpm.conf /etc/php7/php-fpm.d/www.conf
+COPY ./fpm.conf /etc/php7/php-fpm.d/www.conf
 
 # Configure supervisord
-COPY ./XentoCoreConfig/supervisord.conf /etc/supervisor/conf.d/supervisord.conf 
+COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf 
 
 # Configure vhost
-COPY ./XentoCoreConfig/testvhost.conf /etc/nginx/conf.d/testvhost.conf
-COPY ./XentoCoreConfig/devvhost.conf /etc/nginx/conf.d/devvhost.conf
+COPY ./testvhost.conf /etc/nginx/conf.d/testvhost.conf
 
 # Change owner to www-data 
 RUN chown -R www-data:www-data /srv/
