@@ -12,7 +12,7 @@ pipeline {
 	
 	agent none
 	
-	stages{			
+	stages{	
 
 		stage('Build Application') {
 			steps {
@@ -21,20 +21,17 @@ pipeline {
 				}
 			}
 		}
+		
+		stage('Push Application Image') {
+			steps {
+				withDockerRegistry([ credentialsId: "DockerCredentialId", url: "rohitshukla/demo" ]) {
+					sh "docker push rohitshukla/demo:1.0.${$BUILD_NUMBER}"
+				}
+			}
+		}
 
 	}
 }
-
-// ================================================================================================
-// Build steps
-// ================================================================================================
-
-def dockerLogin(String regid) {
-	echo "Connect to registry at ${regid}"
-	def login_command = sh(returnStdout: true, script: "aws ecr get-login --registry-ids ${regid} --region ap-south-1 | sed -e 's|-e none||g'")	
-	sh "${login_command}"
-}
-
 
 // ================================================================================================
 // Tests steps
