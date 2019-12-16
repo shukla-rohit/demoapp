@@ -5,24 +5,20 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 
 pipeline {  
+	environment {
+		registry = "rohitshukla/demo"
+		registryCredential = 'DockerCredentialId'
+	}
+	
 	agent none
-
-	stages{		
-
-		stage('Init') {
-			steps{
-				script{
-					initialize()
-				}
-			}
-			
-		}
+	
+	stages{			
 
 		stage('Build Application') {
-			agent { label 'master' }
-
 			steps {
-				buildApp()
+				script{				
+					docker.build registry + ":$BUILD_NUMBER"
+				}
 			}
 		}
 
@@ -33,35 +29,6 @@ pipeline {
 // Build steps
 // ================================================================================================
 
-def initialize() {
-	env.SERVER_IP = '192.168.172.7'
-
-	env.REGISTRY_URL 	= 'rohitshukla/demo'
-
-	env.IMAGE_NAME = "1.0." + env.BUILD_ID
-}
-
-
-def buildApp() {
-	sh "docker build -t ${env.IMAGE_NAME} ."
-	
-}
-
-
-def buildApplication(branch) {
-	
-	docker.withRegistry(env.REGISTRY_URL) {
-		dockerLogin(env.REGISTRY_ID)
-
-		
-		def buildResult = docker.build(env.IMAGE_NAME)
-		buildResult.push()
-
-		echo "Disconnect from registry at ${env.REGISTRY_URL}"
-        sh "docker logout ${env.REGISTRY_URL}"
-	 }	 
-}
-	
 def dockerLogin(String regid) {
 	echo "Connect to registry at ${regid}"
 	def login_command = sh(returnStdout: true, script: "aws ecr get-login --registry-ids ${regid} --region ap-south-1 | sed -e 's|-e none||g'")	
