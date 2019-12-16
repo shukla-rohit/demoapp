@@ -26,7 +26,7 @@ pipeline {
 		stage('Push Application Image') {
 			agent { label 'master' }
 			steps {
-				withDockerRegistry([ credentialsId: "DockerCredentialId", url: "rohitshukla/demo" ]) {
+				withDockerRegistry([ credentialsId: "DockerCredentialId", url: "https://index.docker.io/v1/rohitshukla/demo" ]) {
 					sh "docker push rohitshukla/demo:1.0.${$BUILD_NUMBER}"
 				}
 			}
