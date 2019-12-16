@@ -15,14 +15,16 @@ pipeline {
 	stages{	
 
 		stage('Build Application') {
+		
 			steps {
 				script{				
 					docker.build registry + ":$BUILD_NUMBER"
 				}
 			}
 		}
-		
+
 		stage('Push Application Image') {
+			agent { label 'master' }
 			steps {
 				withDockerRegistry([ credentialsId: "DockerCredentialId", url: "rohitshukla/demo" ]) {
 					sh "docker push rohitshukla/demo:1.0.${$BUILD_NUMBER}"
