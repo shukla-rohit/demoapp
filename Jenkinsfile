@@ -14,21 +14,14 @@ pipeline {
 	
 	stages{	
 
-		stage('Build Application') {
-		
-			steps {
-				script{				
-					docker.build registry + ":$BUILD_NUMBER"
-				}
-			}
-		}
-
-		stage('Push Application Image') {
+		stage('Build & Push Application Image') {
 			agent { label 'master' }
 			steps {
-				withDockerRegistry([ credentialsId: "DockerCredentialId", url: "https://index.docker.io/v1/rohitshukla/demo" ]) {
-					sh "docker tag rohitshukla/demo:$BUILD_NUMBER rohitshukla/demo:1.0.$BUILD_NUMBER"
-					sh "docker push rohitshukla/demo:1.0.$BUILD_NUMBER"
+			
+				dockerImage = docker.build registry + ":$BUILD_NUMBER"
+				
+				docker.withRegistry( '', DockerCredentialId ) {
+					dockerImage.push()
 				}
 			}
 		}
