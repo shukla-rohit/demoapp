@@ -17,11 +17,12 @@ pipeline {
 		stage('Build & Push Application Image') {
 			agent { label 'master' }
 			steps {
-			
-				dockerImage = docker.build registry + ":$BUILD_NUMBER"
-				
-				docker.withRegistry( '', DockerCredentialId ) {
-					dockerImage.push()
+				script{
+					dockerImage = docker.build registry + ":$BUILD_NUMBER"
+					
+					docker.withRegistry( '', DockerCredentialId ) {
+						dockerImage.push()
+					}
 				}
 			}
 		}
