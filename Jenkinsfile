@@ -31,6 +31,8 @@ pipeline {
 			agent { label 'master' }
 			steps {
 				script{
+					sh 'docker kill demoapp'
+					sh 'docker rm demoapp'
 					sh 'docker run -p 80:8080 --name demoapp -d rohitshukla/demo:$BUILD_NUMBER' 
 				}
 			}
