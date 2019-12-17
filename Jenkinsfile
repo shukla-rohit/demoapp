@@ -31,7 +31,7 @@ pipeline {
 			agent { label 'master' }
 			steps {
 				script{
-					sh 'docker run -name demoapp -p 80:8080 -d rohitshukla/demo:$BUILD_NUMBER' 
+					sh 'docker run -p 80:8080 --name demoapp -d rohitshukla/demo:$BUILD_NUMBER' 
 				}
 			}
 		}
