@@ -12,7 +12,7 @@ pipeline {
 	
 	agent none
 	
-	stages{	
+	stages{
 
 		stage('Build & Push Application Image') {
 			agent { label 'master' }
@@ -32,7 +32,6 @@ pipeline {
 			steps {
 				script{
 					sh 'docker run -name demoapp -p 80:8080 -d rohitshukla/demo:$BUILD_NUMBER' 
-					}
 				}
 			}
 		}
