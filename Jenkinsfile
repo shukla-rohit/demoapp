@@ -6,8 +6,8 @@ import java.util.Calendar
 
 pipeline {  
 	environment {
-		registry = "rohitshukla/demo"
-		registryCredential = 'DockerCredentialId'
+		registry = "devopsmeetup/test"
+		registryCredential = 'dockerhub'
 	}
 	
 	agent none
