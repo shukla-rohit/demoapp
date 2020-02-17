@@ -1,5 +1,5 @@
 <?php
 
-echo 'Hello World!, Running via Docker. Test';
+echo 'Hello World!, Running via Docker.';
 
 ?>
