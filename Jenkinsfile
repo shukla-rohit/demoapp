@@ -6,7 +6,7 @@ import java.util.Calendar
 
 pipeline {  
 	environment {
-		registry = "devopsmeetup/meetup"
+		registry = "devopsmeetup/meetuptest"
 		registryCredential = 'DevOpsToolsMeetupId'
 	}
 	
@@ -33,7 +33,7 @@ pipeline {
 				script{
 					sh 'docker kill demoapp'
 					sh 'docker rm demoapp'
-					sh 'docker run -p 80:8080 --name demoapp -d devopsmeetup/meetup:$BUILD_NUMBER' 
+					sh 'docker run -p 80:8080 --name demoapp -d devopsmeetup/meetuptest:$BUILD_NUMBER' 
 				}
 			}
 		}
