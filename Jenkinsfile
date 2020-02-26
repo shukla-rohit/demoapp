@@ -27,6 +27,15 @@ pipeline {
 			}
 		}
 		
+		stage('Test My Application') {
+			agent { label 'master' }
+			steps {
+				script{
+					sh 'echo Run test cases.' 
+				}
+			}
+		}
+		
 		stage('Deploy Application') {
 			agent { label 'master' }
 			steps {
