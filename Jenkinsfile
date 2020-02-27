@@ -40,7 +40,8 @@ pipeline {
 			agent { label 'master' }
 			steps {
 				script{
-					sh 'echo Run test cases.' 
+					sh 'echo Run test cases.'
+					sh 'export PATH=$PATH:/home/dev/'
 					sh 'python testcase.py'
 					sleep(60)
 				}
