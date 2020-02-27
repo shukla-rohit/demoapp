@@ -51,7 +51,7 @@ pipeline {
 			agent { label 'master' }
 			steps {
 				script{
-					sh 'docker run -p 80:8080 --name demoapp -d devopsmeetup/meetuptest:$BUILD_NUMBER' 
+					sh 'docker run -p 80:8080 --name demoappprod -d devopsmeetup/meetuptest:$BUILD_NUMBER' 
 				}
 			}
 		}
