@@ -27,24 +27,33 @@ pipeline {
 			}
 		}
 		
-		stage('Test My Application') {
+		stage('Deploy Application on Test') {
 			agent { label 'master' }
 			steps {
 				script{
-					sh 'echo Run test cases.' 
+					sh 'docker run -p 8081:8081 --name demoapp -d devopsmeetup/meetuptest:$BUILD_NUMBER' 
 				}
 			}
 		}
 		
-		stage('Deploy Application') {
+		stage('Test Application') {
 			agent { label 'master' }
 			steps {
 				script{
-					
-					sh 'docker run -p 80:8080 --name demoapp -d devopsmeetup/meetuptest:$BUILD_NUMBER' 
+					sh 'echo Run test cases.' 
+					sh 'python testcase.py'
+					sleep(60)
 				}
 			}
 		}
 
+		stage('Deploy Application on Production') {
+			agent { label 'master' }
+			steps {
+				script{
+					sh 'docker run -p 80:8080 --name demoapp -d devopsmeetup/meetuptest:$BUILD_NUMBER' 
+				}
+			}
+		}
 	}
 }
