@@ -41,8 +41,7 @@ pipeline {
 			steps {
 				script{
 					sh 'echo Run test cases.'
-					sh 'export PATH=$PATH:/home/dev/'
-					sh 'python testcase.py'
+					sh 'export PATH=$PATH:/home/dev/ && python testcase.py'
 					sleep(60)
 				}
 			}
