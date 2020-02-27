@@ -40,9 +40,6 @@ RUN chown -R www-data:www-data /run && \
 # Switch user 
 USER www-data
 
-# Expose the port to reach to nginx
-EXPOSE 80
-
 # Start nginx and php-fpm
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
