@@ -1,8 +1,6 @@
 #!groovy
 
 import groovy.json.JsonSlurper
-import java.text.SimpleDateFormat
-import java.util.Calendar
 
 pipeline {  
 	environment {
