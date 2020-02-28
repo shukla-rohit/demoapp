@@ -1,4 +1,15 @@
 #!/bin/bash
+
+# Install Jenkins
+## Before install is necessary to add Jenkins to trusted keys and source list
+wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
+sudo sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'
+sudo apt-get update
+sudo apt-get install -y jenkins
+sudo apt-get install -y openjdk-8-jdk openjdk-8-jre
+sudo systemctl restart jenkins
+
+#Install Docker
 sudo apt update
 
 sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
@@ -20,6 +31,14 @@ sudo usermod -aG docker $(whoami)
 sudo usermod -aG docker jenkins
 
 sudo systemctl restart docker
+
+#Install test package
+
+sudo apt-add-repository ppa:mozillateam/firefox-next
+sudo apt-get update
+sudo apt-get install firefox xvfb
+Xvfb :10 -ac &
+export DISPLAY=:10
 
 # install selenium and pyvirtualdisplay for tesing
 sudo apt-get install -y python-pip
