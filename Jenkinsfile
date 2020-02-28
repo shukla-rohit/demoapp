@@ -27,7 +27,7 @@ pipeline {
 			}
 		}
 		
-		stage('Deploy Application on Test') {
+		stage('Deploy Application on Test Environment') {
 			agent { label 'master' }
 			steps {
 				script{
@@ -42,7 +42,7 @@ pipeline {
 				script{
 					sh 'echo Run test cases.'
 					sh 'export PATH=$PATH:/home/demoapp/ && python testcase.py'
-					sleep(60)
+					sh 'echo Test case(s) ran successfully.'
 				}
 			}
 		}
