@@ -36,7 +36,7 @@ sudo systemctl restart docker
 
 sudo apt-add-repository ppa:mozillateam/firefox-next
 sudo apt-get update
-sudo apt-get install firefox xvfb
+sudo apt-get install -y firefox xvfb
 Xvfb :10 -ac &
 export DISPLAY=:10
 
