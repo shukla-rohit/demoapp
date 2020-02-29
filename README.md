@@ -8,4 +8,4 @@ Password : Meetup@123
 
 # Hub Docker
 username: devopsmeetup
-pwd:Xeno123$
+pwd:Xento123$
